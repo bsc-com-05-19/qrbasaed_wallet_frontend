@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart'; 
+import 'package:intl/intl.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
-
-  static const double topPadding = 10;
-  static const double bottomPadding = 50;
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +17,8 @@ class HomePage extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.only(
-            top: topPadding,
-            bottom: bottomPadding,
+            top: 30,
+            bottom: 10,
             left: 16,
           ),
           child: Column(
@@ -32,22 +29,22 @@ class HomePage extends StatelessWidget {
                   SizedBox(
                     width: 33.12,
                     height: 24,
-                    child: Image.asset('assets/data/izepay_logo2.png'), 
+                    child: Image.asset('assets/data/izepay_logo2.png'),
                   ),
-                  const SizedBox(width: 8), 
+                  const SizedBox(width: 8),
                   const Text(
                     'izepay',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
                       fontFamily: 'Inter',
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w600,
                       height: 0,
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 16), 
+              const SizedBox(height: 16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -56,7 +53,9 @@ class HomePage extends StatelessWidget {
                     color: Colors.white,
                     size: 18,
                   ),
-                  const SizedBox(width: 8,),
+                  const SizedBox(
+                    width: 8,
+                  ),
                   Text(
                     currentDate,
                     style: const TextStyle(
@@ -69,7 +68,7 @@ class HomePage extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 5), 
+              const SizedBox(height: 5),
               const Text(
                 'Welcome!',
                 style: TextStyle(
@@ -79,6 +78,41 @@ class HomePage extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                   height: 0,
                 ),
+              ),
+              const SizedBox(height: 5),
+              const Text(
+                'Francis Eneya',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.w700,
+                  height: 0,
+                ),
+              ),
+              const SizedBox(height: 5),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center, // Align to the left
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(left: 8.0, right: 8.0),
+                    child: Icon(
+                      Icons.account_balance_wallet,
+                      color: Colors.white,
+                      size: 24,
+                    ),
+                  ),
+                  Container(
+                    width: 191,
+                    height: 34,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
