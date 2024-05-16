@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:qrbased_frontend/balance_screen.dart';
+import 'home.dart'; // Import the home.dart file
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class BalanceScreen extends StatefulWidget {
+  const BalanceScreen({Key? key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _BalanceScreenState createState() => _BalanceScreenState();
 }
 
-class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
+class _BalanceScreenState extends State<BalanceScreen> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Offset> _offsetAnimation;
   bool _isButtonPressed = false;
@@ -19,11 +19,11 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 500),
     );
     _offsetAnimation = Tween<Offset>(
-      begin: Offset.zero,
-      end: Offset(1, 0),
+      begin: const Offset(1, 0), // Initial position
+      end: Offset.zero, // Final position
     ).animate(CurvedAnimation(
       parent: _controller,
       curve: Curves.easeInOut,
@@ -102,10 +102,10 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               ),
               const SizedBox(height: 5),
               const Text(
-                'Welcome!',
+                'MWK 1,034,875.00',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 48,
+                  fontSize: 34,
                   fontFamily: 'Inter',
                   fontWeight: FontWeight.w700,
                   height: 0,
@@ -148,12 +148,12 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         SlideTransition(
                           position: _offsetAnimation,
                           child: ElevatedButton(
-                             onPressed: () {
+                            onPressed: () {
                               if (_isButtonPressed) {
                                 _controller.forward().then((_) {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => BalanceScreen()), // Navigate to HomePage
+                                    MaterialPageRoute(builder: (context) => HomePage()), // Navigate to HomePage
                                   );
                                 });
                               } else {
