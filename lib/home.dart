@@ -103,13 +103,36 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    width: 191,
+                    width: 178,
                     height: 34,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       border: Border.all(
-                        color: Colors.white,
+                        color:  Color(0xFF7870B3),
                       ),
+                    ),
+                    child: Row(
+                      children: [
+                        const SizedBox(width: 0), // Adjust the width as needed
+                        ElevatedButton(
+                          onPressed: () {
+                            // Add your button functionality here
+                          },
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Color(0xFF564FA1), backgroundColor: Color(0xFFD4B150),
+                            minimumSize: const Size(110, 34), 
+                            padding: const EdgeInsets.symmetric(horizontal: 0), 
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              side: const BorderSide(color: Color(0xFFD4B150)),
+                            ),
+                          ),
+                          child: const Text(
+                            'Balance',
+                            style: TextStyle(fontSize: 14),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
