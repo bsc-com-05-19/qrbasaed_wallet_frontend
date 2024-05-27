@@ -3,6 +3,7 @@ import 'package:qrbased_frontend/home.dart';
 import 'welcome.dart';
 import 'home.dart';
 import 'balance_screen.dart';
+import 'qrScannerpage.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       home: Scaffold(
         body: Center(
-          child:  HomePage() //BalanceScreen(),,//WelcomeScreen(), 
+          child: QRScannerPage(), //HomePage() //BalanceScreen(),,//WelcomeScreen(), 
         ),
       ),
     );
