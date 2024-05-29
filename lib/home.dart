@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:qrbased_frontend/balance_screen.dart';
+import 'package:qrbased_frontend/qrScannerPage.dart';
+import 'package:qrbased_frontend/notification.dart';
+import 'package:qrbased_frontend/receipt.dart';
+import 'package:qrbased_frontend/settings.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 class HomePage extends StatefulWidget {
@@ -14,6 +18,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   late AnimationController _controller;
   late Animation<Offset> _offsetAnimation;
   bool _isButtonPressed = false;
+  int _selectedIndex = 0; // Track selected nav icon index
 
   @override
   void initState() {
@@ -46,7 +51,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
-            height: MediaQuery.of(context).size.height / 2.2,
+            height: MediaQuery.of(context).size.height / 2.3,
             decoration: const BoxDecoration(
               color: Color(0xFF564FA1),
             ),
@@ -82,17 +87,11 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                           ),
                         ],
                       ),
-                      Row(
+                      const Row(
                         children: [
-                          IconButton(
-                            icon: Icon(Icons.notifications, color: Colors.white),
-                            onPressed: () {
-                              // Handle notification icon tap
-                            },
-                          ),
-                          const CircleAvatar(
+                          CircleAvatar(
                             radius: 20,
-                            backgroundImage: AssetImage('assets/data/profile_picture.png'),
+                            backgroundImage: AssetImage('assets/data/profile_picture.jpg'),
                           ),
                         ],
                       ),
@@ -104,12 +103,10 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                     children: [
                       const Icon(
                         Icons.calendar_today,
-                        color: Colors.white,
-                        size: 18,
+                        color: Colors.grey,
+                        size: 16,
                       ),
-                      const SizedBox(
-                        width: 8,
-                      ),
+                      const SizedBox(width: 8),
                       Text(
                         currentDate,
                         style: const TextStyle(
@@ -133,60 +130,70 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                   ),
                   const SizedBox(height: 5),
                   const Text(
-                    'Francis Yeneya',
+                    'Francis Eneya',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
                       fontFamily: 'Inter',
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                   const SizedBox(height: 16),
-                  Container(
-                    width: 204.2,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: const Color(0xFF7870B3),
-                    ),
-                    child: Stack(
-                      children: [
-                        SlideTransition(
-                          position: _offsetAnimation,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              if (_isButtonPressed) {
-                                _controller.forward().then((_) {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => const BalanceScreen()),
-                                  );
-                                });
-                              } else {
-                                _controller.reverse();
-                              }
-                              setState(() {
-                                _isButtonPressed = !_isButtonPressed;
-                              });
-                            },
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor: const Color(0xFF564FA1),
-                              backgroundColor: const Color(0xFFD4B150),
-                              minimumSize: const Size(111, 35),
-                              padding: const EdgeInsets.symmetric(horizontal: 18),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                                side: const BorderSide(color: Color(0xFFD4B150)),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        Icons.account_balance_wallet,
+                        color: Colors.grey,
+                      ),
+                      const SizedBox(width: 8),
+                      Container(
+                        width: 204.1,
+                        height: 35,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(18),
+                          color: const Color(0xFF7870B3),
+                        ),
+                        child: Stack(
+                          children: [
+                            SlideTransition(
+                              position: _offsetAnimation,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  if (_isButtonPressed) {
+                                    _controller.forward().then((_) {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => const BalanceScreen()),
+                                      );
+                                    });
+                                  } else {
+                                    _controller.reverse();
+                                  }
+                                  setState(() {
+                                    _isButtonPressed = !_isButtonPressed;
+                                  });
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  primary: const Color(0xFFD4B150),
+                                  onPrimary: const Color(0xFF564FA1),
+                                  minimumSize: const Size(111, 35),
+                                  padding: const EdgeInsets.symmetric(horizontal: 18),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                    side: const BorderSide(color: Color(0xFFD4B150)),
+                                  ),
+                                ),
+                                child: const Text(
+                                  'Balance',
+                                  style: TextStyle(fontSize: 14),
+                                ),
                               ),
                             ),
-                            child: const Text(
-                              'Balance',
-                              style: TextStyle(fontSize: 14),
-                            ),
-                          ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -215,9 +222,9 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                             children: [
                               IconButton(
                                 icon: Icon(Icons.swap_vert),
-                                iconSize: 24, 
+                                iconSize: 24,
                                 color: Color(0xFFD4B150),
-                                onPressed: null, 
+                                onPressed: null,
                               ),
                               SizedBox(width: 2),
                               Text(
@@ -237,12 +244,22 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                             ),
                             child: const Padding(
                               padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                              child: Text(
-                                'My QR',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                ),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.qr_code_scanner,
+                                    color: Colors.white,
+                                    size: 16,
+                                  ),
+                                  SizedBox(width: 4),
+                                  Text(
+                                    'My QR',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
@@ -256,76 +273,27 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         children: [
                           _buildRecipientCircle('W', 'Wify'),
                           _buildRecipientCircle('J', 'Jack Boss'),
-                          _buildRecipientCircleImage('assets/data/recipient_image.jpg', 'King Bres_'), // Profile image for King Bres_
+                          _buildRecipientCircleImage('assets/data/profile_picture.jpg', 'King Bres_'),
                           _buildRecipientCircle('E', 'ED'),
                         ],
                       ),
                     ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: BarChart(
-                          BarChartData(
-                            barGroups: [
-                              _buildBarChartGroup(0, 4, 3), // Monday
-                              _buildBarChartGroup(1, 2, 2), // Tuesday
-                              _buildBarChartGroup(2, 3, 4), // Wednesday
-                              _buildBarChartGroup(3, 5, 3), // Thursday
-                              _buildBarChartGroup(4, 6, 5), // Friday
-                              _buildBarChartGroup(5, 4, 4), // Saturday
-                              _buildBarChartGroup(6, 3, 2), // Sunday
-                            ],
-                            titlesData: FlTitlesData(
-                              leftTitles: SideTitles(showTitles: false),
-                              bottomTitles: SideTitles(
-                                showTitles: true,
-                                getTextStyles: (context, value) => const TextStyle(
-                                  color: Color(0xFF564FA1),
-                                  fontSize: 12,
-                                ),
-                                getTitles: (double value) {
-                                  switch (value.toInt()) {
-                                    case 0:
-                                      return 'Mon';
-                                    case 1:
-                                      return 'Tue';
-                                    case 2:
-                                      return 'Wed';
-                                    case 3:
-                                      return 'Thu';
-                                    case 4:
-                                      return 'Fri';
-                                    case 5:
-                                      return 'Sat';
-                                    case 6:
-                                      return 'Sun';
-                                    default:
-                                      return '';
-                                  }
-                                },
-                              ),
-                            ),
-                            borderData: FlBorderData(show: false),
-                            gridData: FlGridData(show: false),
-                          ),
-                        ),
+                    const Spacer(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          _buildNavButton(Icons.notifications, '', index: 0),
+                          _buildNavButton(Icons.qr_code_2, '', index: 1),
+                          _buildNavButton(Icons.receipt_long, '', index: 2),
+                          _buildNavButton(Icons.settings, '', index: 3),
+                        ],
                       ),
                     ),
                   ],
                 ),
               ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _buildNavIcon(Icons.account_balance_wallet),
-                _buildNavIcon(Icons.qr_code, active: true),
-                _buildNavIcon(Icons.receipt_long),
-                _buildNavIcon(Icons.settings),
-              ],
             ),
           ),
         ],
@@ -338,7 +306,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       children: [
         CircleAvatar(
           radius: 20,
-          backgroundColor: Color(0xFFD4B150),
+          backgroundColor: const Color(0xFFD4B150),
           child: Text(
             initial,
             style: const TextStyle(
@@ -379,29 +347,48 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     );
   }
 
-  BarChartGroupData _buildBarChartGroup(int x, double y1, double y2) {
-    return BarChartGroupData(
-      x: x,
-      barRods: [
-        BarChartRodData(
-          y: y1,
-          colors: [Color(0xFFD4B150)],
-          width: 8,
+  Widget _buildNavButton(IconData icon, String label, {required int index}) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _selectedIndex = index; 
+        });
+        switch (index) {
+          case 0:
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const NotificationsPage()));
+            break;
+          case 1:
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const QRScannerPage()));
+            break;
+          case 2:
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const ReceiptPage()));
+            break;
+          case 3:
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsPage()));
+            break;
+        }
+      },
+      child: SizedBox(
+        width: 65, 
+        height: 60, 
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              icon,
+              color: _selectedIndex == index ? const Color(0xFF564FA1) : Colors.grey,
+              size: 28,
+            ),
+            Text(
+              label,
+              style: TextStyle(
+                color: _selectedIndex == index ? const Color(0xFF564FA1) : Colors.grey,
+                fontSize: 12,
+              ),
+            ),
+          ],
         ),
-        BarChartRodData(
-          y: y2,
-          colors: [Color(0xFF564FA1)],
-          width: 8,
-        ),
-      ],
-    );
-  }
-
-  Widget _buildNavIcon(IconData icon, {bool active = false}) {
-    return Icon(
-      icon,
-      color: active ? const Color(0xFF564FA1) : Colors.grey,
-      size: 28,
+      ),
     );
   }
 }
