@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:qrbased_frontend/home.dart';
+import 'package:qrbased_frontend/login.dart';
 
 
 class WelcomeScreen extends StatefulWidget {
@@ -24,7 +25,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
     // Navigate to the sign-in screen after a delay
     Future.delayed(const Duration(seconds: 7), () {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const HomePage(),
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const LoginPage(),
       )
       );
     });

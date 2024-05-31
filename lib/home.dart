@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:qrbased_frontend/balance_screen.dart';
-import 'package:qrbased_frontend/qrScannerPage.dart';
 import 'package:qrbased_frontend/notification.dart';
+import 'package:qrbased_frontend/qr_image.dart';
 import 'package:qrbased_frontend/receipt.dart';
+import 'package:qrbased_frontend/scanner.dart';
 import 'package:qrbased_frontend/settings.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -20,6 +23,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   late Animation<Offset> _offsetAnimation;
   bool _isButtonPressed = false;
   int _selectedIndex = 0; // Track selected nav icon index
+  String _username = '';
 
   @override
   void initState() {
@@ -35,12 +39,20 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       parent: _controller,
       curve: Curves.easeInOut,
     ));
+    _loadUserData();
   }
 
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  Future<void> _loadUserData() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _username = prefs.getString('username') ?? 'Guest';
+    });
   }
 
   @override
@@ -92,8 +104,14 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                           children: [
                             CircleAvatar(
                               radius: 20,
-                              backgroundImage: AssetImage('assets/data/profile_picture.jpg'),
+                              backgroundColor: Color(0xFFD4B150), // Optional: Background color for the circle
+                              child: Icon(
+                                Icons.person, // Replace with your desired icon
+                                size: 20, // Size of the icon
+                                color: Color(0xFF564FA1), // Color of the icon
+                              ),
                             ),
+
                           ],
                         ),
                       ],
@@ -109,8 +127,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       ),
                     ),
                     const SizedBox(height: 5),
-                    const Text(
-                      'Francis Eneya',
+                    Text(
+                      _username,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
@@ -242,14 +260,23 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                               color: const Color(0xFF564FA1),
                               borderRadius: BorderRadius.circular(8),
                             ),
-                            child: const Padding(
+                            child: Padding(
                               padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                               child: Row(
                                 children: [
-                                  Icon(
-                                    Icons.qr_code_scanner,
-                                    color: Colors.white,
-                                    size: 16,
+                                  IconButton(
+                                    icon: Icon(Icons.qr_code, color: Colors.white,),
+                                    iconSize: 20.0,
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) {
+                                            return QRImage();
+                                          },
+                                        ),
+                                      );
+                                    },
                                   ),
                                   SizedBox(width: 4),
                                   Text(
@@ -289,7 +316,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => const QRScannerPage()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const QRCodeScannerPage()));
         },
         backgroundColor: const Color(0xFF564FA1),
         child: const Icon(Icons.qr_code_2),
