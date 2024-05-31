@@ -5,10 +5,11 @@ import 'package:qrbased_frontend/qrScannerPage.dart';
 import 'package:qrbased_frontend/notification.dart';
 import 'package:qrbased_frontend/receipt.dart';
 import 'package:qrbased_frontend/settings.dart';
-import 'package:fl_chart/fl_chart.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  static String routeName = "/home";
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -47,160 +48,159 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     String currentDate = DateFormat.yMMMMd().format(DateTime.now());
 
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Container(
-            height: MediaQuery.of(context).size.height / 2.3,
-            decoration: const BoxDecoration(
-              color: Color(0xFF564FA1),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only(
-                top: 30,
-                bottom: 10,
-                left: 16,
-                right: 16,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height / 2.3,
+              decoration: const BoxDecoration(
+                color: Color(0xFF564FA1),
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 33.12,
-                            height: 24,
-                            child: Image.asset('assets/data/izepay_logo2.png'),
-                          ),
-                          const SizedBox(width: 8),
-                          const Text(
-                            'izePay',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const Row(
-                        children: [
-                          CircleAvatar(
-                            radius: 20,
-                            backgroundImage: AssetImage('assets/data/profile_picture.jpg'),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Icons.calendar_today,
-                        color: Colors.grey,
-                        size: 16,
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        currentDate,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 13,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  const Text(
-                    'Welcome!',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 48,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  const Text(
-                    'Francis Eneya',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Icons.account_balance_wallet,
-                        color: Colors.grey,
-                      ),
-                      const SizedBox(width: 8),
-                      Container(
-                        width: 204.1,
-                        height: 35,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(18),
-                          color: const Color(0xFF7870B3),
-                        ),
-                        child: Stack(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  top: 30,
+                  bottom: 10,
+                  left: 16,
+                  right: 16,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
                           children: [
-                            SlideTransition(
-                              position: _offsetAnimation,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  if (_isButtonPressed) {
-                                    _controller.forward().then((_) {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(builder: (context) => const BalanceScreen()),
-                                      );
-                                    });
-                                  } else {
-                                    _controller.reverse();
-                                  }
-                                  setState(() {
-                                    _isButtonPressed = !_isButtonPressed;
-                                  });
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  primary: const Color(0xFFD4B150),
-                                  onPrimary: const Color(0xFF564FA1),
-                                  minimumSize: const Size(111, 35),
-                                  padding: const EdgeInsets.symmetric(horizontal: 18),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                    side: const BorderSide(color: Color(0xFFD4B150)),
-                                  ),
-                                ),
-                                child: const Text(
-                                  'Balance',
-                                  style: TextStyle(fontSize: 14),
-                                ),
+                            SizedBox(
+                              width: 33.12,
+                              height: 24,
+                              child: Image.asset('assets/data/izepay_logo2.png'),
+                            ),
+                            const SizedBox(width: 8),
+                            const Text(
+                              'IZEpay',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 30,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ],
                         ),
+                        const Row(
+                          children: [
+                            CircleAvatar(
+                              radius: 20,
+                              backgroundImage: AssetImage('assets/data/profile_picture.jpg'),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 26),
+                    const Text(
+                      'Welcome',
+                      style: TextStyle(
+                        color: Color(0xFFD4B150),
+                        fontSize: 38,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w700,
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+                    const SizedBox(height: 5),
+                    const Text(
+                      'Francis Eneya',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 35),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.calendar_today,
+                          color: Color(0xFFD4B150),
+                          size: 16,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          currentDate,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 13,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.account_balance_wallet,
+                          color: Color(0xFFD4B150),
+                        ),
+                        const SizedBox(width: 8),
+                        Container(
+                          width: 204.1,
+                          height: 35,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(18),
+                            color: const Color(0xFF7870B3),
+                          ),
+                          child: Stack(
+                            children: [
+                              SlideTransition(
+                                position: _offsetAnimation,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    if (_isButtonPressed) {
+                                      _controller.forward().then((_) {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) => const BalanceScreen()),
+                                        );
+                                      });
+                                    } else {
+                                      _controller.reverse();
+                                    }
+                                    setState(() {
+                                      _isButtonPressed = !_isButtonPressed;
+                                    });
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    primary: const Color(0xFFD4B150),
+                                    onPrimary: const Color(0xFF564FA1),
+                                    minimumSize: const Size(111, 35),
+                                    padding: const EdgeInsets.symmetric(horizontal: 18),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20),
+                                      side: const BorderSide(color: Color(0xFFD4B150)),
+                                    ),
+                                  ),
+                                  child: const Text(
+                                    'Balance',
+                                    style: TextStyle(fontSize: 14),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          Expanded(
-            child: Padding(
+            Padding(
               padding: const EdgeInsets.all(16.0),
               child: Container(
                 decoration: ShapeDecoration(
@@ -278,25 +278,50 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         ],
                       ),
                     ),
-                    const Spacer(),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          _buildNavButton(Icons.notifications, '', index: 0),
-                          _buildNavButton(Icons.qr_code_2, '', index: 1),
-                          _buildNavButton(Icons.receipt_long, '', index: 2),
-                          _buildNavButton(Icons.settings, '', index: 3),
-                        ],
-                      ),
-                    ),
+                    const SizedBox(height: 16),
                   ],
                 ),
               ),
             ),
+          ],
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const QRScannerPage()));
+        },
+        backgroundColor: const Color(0xFF564FA1),
+        child: const Icon(Icons.qr_code_2),
+      ),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Color(0xFF564FA1).withOpacity(0.5),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: Offset(0, 3), // changes position of shadow
+            ),
+          ],
+        ),
+        child: BottomAppBar(
+          color: Colors.white,
+          shape: const CircularNotchedRectangle(),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _buildNavButton(Icons.home_filled, 'Home', index: 0),
+                _buildNavButton(Icons.notifications, 'Notifications', index: 1),
+                _buildNavButton(Icons.receipt_long, 'Receipts', index: 2),
+                _buildNavButton(Icons.settings, 'Settings', index: 3),
+              ],
+            ),
           ),
-        ],
+        ),
       ),
     );
   }
@@ -351,14 +376,14 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     return GestureDetector(
       onTap: () {
         setState(() {
-          _selectedIndex = index; 
+          _selectedIndex = index;
         });
         switch (index) {
           case 0:
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const NotificationsPage()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()));
             break;
           case 1:
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const QRScannerPage()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const NotificationsPage()));
             break;
           case 2:
             Navigator.push(context, MaterialPageRoute(builder: (context) => const ReceiptPage()));
@@ -369,21 +394,21 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         }
       },
       child: SizedBox(
-        width: 65, 
-        height: 60, 
+        width: 65,
+        height: 60,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
               icon,
               color: _selectedIndex == index ? const Color(0xFF564FA1) : Colors.grey,
-              size: 28,
+              size: 25,
             ),
             Text(
               label,
               style: TextStyle(
                 color: _selectedIndex == index ? const Color(0xFF564FA1) : Colors.grey,
-                fontSize: 12,
+                fontSize: 10,
               ),
             ),
           ],
@@ -391,4 +416,5 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       ),
     );
   }
+
 }

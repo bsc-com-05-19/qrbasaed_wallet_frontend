@@ -16,9 +16,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Center(
-          child: HomePage()
+          child:
+          //HomePage()
            //QRScannerPage(),  //BalanceScreen(),,
-           //WelcomeScreen(), 
+           WelcomeScreen(),
         ),
       ),
     );

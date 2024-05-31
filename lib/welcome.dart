@@ -1,7 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:qrbased_frontend/home.dart';
 
-class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen({Key? key});
+
+class WelcomeScreen extends StatefulWidget {
+  static String routeName = "/welcome";
+
+  const WelcomeScreen({super.key});
+
+  @override
+  State<WelcomeScreen> createState() => _WelcomeScreenState();
+}
+
+class _WelcomeScreenState extends State<WelcomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    // Set status bar color to match the background color
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(statusBarColor: Colors.white),
+    );
+
+    // Navigate to the sign-in screen after a delay
+    Future.delayed(const Duration(seconds: 7), () {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const HomePage(),
+      )
+      );
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    // Reset the status bar color when the splash screen page is disposed
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(statusBarColor: Color(0xFF564FA1)),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,10 +101,10 @@ class WelcomeScreen extends StatelessWidget {
                                 ),
                                 SizedBox(width: screenSize.width * 0.02), // Add spacing between logo and text
                                 Text(
-                                  'izePay',
+                                  'IZEpay',
                                   style: TextStyle(
                                     color: const Color(0xFFD4B150),
-                                    fontSize: screenSize.width * 0.037,
+                                    fontSize: screenSize.width * 0.047,
                                     fontFamily: 'Inter',
                                     fontWeight: FontWeight.w700,
                                   ),

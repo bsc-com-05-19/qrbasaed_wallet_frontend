@@ -17,7 +17,7 @@ def flutterVersionName = localProperties.getProperty('flutter.versionName') ?: '
 
 android {
     namespace 'com.example.qrbased_frontend'
-    compileSdkVersion 33
+    compileSdkVersion 34
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -34,10 +34,10 @@ android {
 
     defaultConfig {
         applicationId "com.example.qrbased_frontend"
-        minSdkVersion 20
-        targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion 29
+        targetSdkVersion flutter.targetSdkVersion
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
     }
 
     buildTypes {
