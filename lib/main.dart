@@ -27,9 +27,9 @@ class MyApp extends StatelessWidget {
       home: const Scaffold(
         body: Center(
           child:
-          HomePage()
+          //HomePage()
            //QRScannerPage(),  //BalanceScreen(),,
-           //WelcomeScreen(),
+           WelcomeScreen(),
         ),
       ),
     );

@@ -7,4 +7,5 @@ import 'package:qrbased_frontend/welcome.dart';
 final Map<String, WidgetBuilder> routes = {
   WelcomeScreen.routeName: (context) => const WelcomeScreen(),
   HomePage.routeName: (context) => const HomePage()
+
 };

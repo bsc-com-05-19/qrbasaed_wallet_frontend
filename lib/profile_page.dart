@@ -1,9 +1,9 @@
-// profile_page.dart
-
 import 'package:flutter/material.dart';
+import 'package:qrbased_frontend/settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'login.dart';
+import 'settings.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -36,7 +36,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Profile',
           style: TextStyle(
             color: Colors.white, // Text color
@@ -44,8 +44,8 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ),
         centerTitle: true,
-        backgroundColor: Color(0xFF564FA1),
-        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: const Color(0xFF564FA1),
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -53,11 +53,11 @@ class _ProfilePageState extends State<ProfilePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              CircleAvatar(
+              const CircleAvatar(
                 radius: 50,
                 backgroundImage: AssetImage('assets/profile_picture.jpg'),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Text(
                 _username,
                 style: TextStyle(
@@ -66,8 +66,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   color: Colors.grey[700],
                 ),
               ),
-              SizedBox(height: 20),
-              Divider(),
+              const SizedBox(height: 20),
+              const Divider(),
               Text(
                 _balance,
                 style: TextStyle(
@@ -76,45 +76,48 @@ class _ProfilePageState extends State<ProfilePage> {
                   color: Colors.grey[700],
                 ),
               ),
-              SizedBox(height: 20),
-              Divider(),
+              const SizedBox(height: 20),
+              const Divider(),
               ListTile(
-                leading: Icon(
+                leading: const Icon(
                   Icons.person,
                   color: Color(0xFF564FA1),
                 ),
-                title: Text('Account Settings'),
-                trailing: Icon(
+                title: const Text('Account Settings'),
+                trailing: const Icon(
                   Icons.arrow_forward,
                   color: Color(0xFF564FA1),
                 ),
                 onTap: () {
-                  // Navigate to account settings
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SettingsPage()),
+                  );
                 },
               ),
-              Divider(),
+              const Divider(),
               ListTile(
-                leading: Icon(
+                leading: const Icon(
                   Icons.history,
                   color: Color(0xFF564FA1),
                 ),
-                title: Text('Payment History'),
-                trailing: Icon(
+                title: const Text('Payment History'),
+                trailing: const Icon(
                   Icons.arrow_forward,
                   color: Color(0xFF564FA1),
                 ),
                 onTap: () {
-                  // Navigate to order history
+                  // Navigate to payment history
                 },
               ),
-              Divider(),
+              const Divider(),
               ListTile(
-                leading: Icon(
+                leading: const Icon(
                   Icons.logout,
                   color: Color(0xFF564FA1),
                 ),
-                title: Text('Logout'),
-                trailing: Icon(
+                title: const Text('Logout'),
+                trailing: const Icon(
                   Icons.arrow_forward,
                   color: Color(0xFF564FA1),
                 ),
@@ -125,11 +128,11 @@ class _ProfilePageState extends State<ProfilePage> {
                   await prefs.remove('email');
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => LoginPage()),
+                    MaterialPageRoute(builder: (context) => const LoginPage()),
                   );
                 },
               ),
-              Divider(),
+              const Divider(),
             ],
           ),
         ),
