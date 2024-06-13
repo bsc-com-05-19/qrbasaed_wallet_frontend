@@ -29,7 +29,7 @@ class _SignupPageState extends State<SignupPage> {
   Future<void> _register() async {
     if (_formKey.currentState!.validate()) {
       final response = await http.post(
-        Uri.parse('https://5930-41-70-47-51.ngrok-free.app/register'),
+        Uri.parse('https://qr-based-mobile-wallet.onrender.com/register'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
           'email': _emailController.text,
