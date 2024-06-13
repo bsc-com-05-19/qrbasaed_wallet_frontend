@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'login.dart';
+
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
@@ -14,6 +16,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   String _username = '';
+  String _balance = '';
 
   @override
   void initState() {
@@ -25,6 +28,7 @@ class _ProfilePageState extends State<ProfilePage> {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       _username = prefs.getString('username') ?? 'Guest';
+      _balance = prefs.getString('balance') ?? 'no balance';
     });
   }
 
@@ -56,6 +60,16 @@ class _ProfilePageState extends State<ProfilePage> {
               SizedBox(height: 20),
               Text(
                 _username,
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[700],
+                ),
+              ),
+              SizedBox(height: 20),
+              Divider(),
+              Text(
+                _balance,
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
@@ -109,7 +123,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   await prefs.remove('session_id');
                   await prefs.remove('username');
                   await prefs.remove('email');
-                  Navigator.pushReplacementNamed(context, '/login');
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                  );
                 },
               ),
               Divider(),

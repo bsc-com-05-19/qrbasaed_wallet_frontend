@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import '../../login.dart';
+import 'components/account_text.dart';
 
 class SignupPage extends StatefulWidget {
   static String routeName = "/signup";
@@ -28,7 +29,7 @@ class _SignupPageState extends State<SignupPage> {
   Future<void> _register() async {
     if (_formKey.currentState!.validate()) {
       final response = await http.post(
-        Uri.parse('https://a557-41-70-47-51.ngrok-free.app/register'),
+        Uri.parse('https://5930-41-70-47-51.ngrok-free.app/register'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
           'email': _emailController.text,
@@ -381,9 +382,10 @@ class _SignupPageState extends State<SignupPage> {
                     const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: _register,
-                      child: const Text('Register'),
+                      child: const Text('Create'),
                       style: ElevatedButton.styleFrom(
-                        primary: Color(0xFF564FA1), // Replace deepPurple with the hex color
+                          backgroundColor: Color(0xFF564FA1),
+                          textStyle: TextStyle(fontSize: 16)
                       ),
                     ),
                     const SizedBox(height: 10),
@@ -397,10 +399,7 @@ class _SignupPageState extends State<SignupPage> {
                           ),
                         );
                       },
-                      child: const Text('Already have an Account? Sign in',
-                      style: TextStyle(color: Colors.black54
-                      ),
-                      ),
+                      child: const AccountText(),
                     ),
                   ],
                 ),

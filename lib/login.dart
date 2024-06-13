@@ -3,7 +3,10 @@ import 'package:http/http.dart' as http;
 import 'package:qrbased_frontend/home.dart';
 import 'package:qrbased_frontend/sign_up.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert'; // Import JSON package
+import 'dart:convert';
+
+import 'components/account_text.dart';
+import 'components/no_account_text.dart'; // Import JSON package
 
 
 class LoginPage extends StatefulWidget {
@@ -24,7 +27,7 @@ class _LoginPageState extends State<LoginPage> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      var url = Uri.parse('https://a557-41-70-47-51.ngrok-free.app/login');
+      var url = Uri.parse('https://5930-41-70-47-51.ngrok-free.app/login');
       try {
         var response = await http.post(url, body: {'username': _username, 'password': _password});
 
@@ -43,6 +46,7 @@ class _LoginPageState extends State<LoginPage> {
           await prefs.setString('card_number', user['card']['number']);
           await prefs.setString('card_security_code', user['card']['securityCode']);
           await prefs.setString('card_expiry', user['card']['expiry']);
+          await prefs.setString('balance', user['balance']);
 
           print('Session ID stored: $sessionId');
 
@@ -177,9 +181,10 @@ class _LoginPageState extends State<LoginPage> {
                     ElevatedButton(
                       key: const Key("login_button"),
                       onPressed: _loginUser,
-                      child: const Text('Login'),
+                      child: const Text('Sign in'),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF564FA1), // Replace deepPurple with the hex color
+                        backgroundColor: Color(0xFF564FA1),
+                        textStyle: TextStyle(fontSize: 16)
                       ),
                     ),
                     const SizedBox(height: 10),
@@ -193,10 +198,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         );
                       },
-                      child: const Text('Don\'t have an Account? Sign in',
-                        style: TextStyle(color: Colors.black54
-                        ),
-                      ),
+                      child: const NoAccountText(),
                     ),
                     Divider(),
                   ],

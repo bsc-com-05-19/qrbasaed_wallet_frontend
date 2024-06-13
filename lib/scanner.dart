@@ -264,7 +264,7 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> {
       };
 
       final response = await http.post(
-        Uri.parse('https://a557-41-70-47-51.ngrok-free.app/create-order'),
+        Uri.parse('https://5930-41-70-47-51.ngrok-free.app/create-order'),
         headers: <String, String>{
           'Content-Type': 'application/json',
         },
