@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 
-class NotificationsPage extends StatelessWidget {
+class NotificationsPage extends StatefulWidget {
   const NotificationsPage({Key? key}) : super(key: key);
+
+  @override
+  _NotificationsPageState createState() => _NotificationsPageState();
+}
+
+class _NotificationsPageState extends State<NotificationsPage> {
+  bool _hasNewNotifications = true;
 
   @override
   Widget build(BuildContext context) {
@@ -15,26 +22,52 @@ class NotificationsPage extends StatelessWidget {
               children: [
                 Container(
                   color: const Color(0xFF564FA1),
-                  padding: const EdgeInsets.only(top: 50, bottom: 30), // Added bottom padding to move the icons down
+                  padding: const EdgeInsets.only(top: 50, bottom: 30),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(left: 8.0), // Added left padding
+                        padding: const EdgeInsets.only(left: 8.0),
                         child: IconButton(
                           icon: const Icon(Icons.arrow_back, color: Colors.white),
                           onPressed: () {
-                            // Add your back button functionality here
+                            Navigator.of(context).pop();
                           },
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(right: 8.0), // Added right padding
-                        child: IconButton(
-                          icon: const Icon(Icons.notifications, color: Colors.white),
-                          onPressed: () {
-                            // Add your notifications button functionality here
-                          },
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: Stack(
+                          children: [
+                            IconButton(
+                              icon: const Icon(Icons.notifications, color: Colors.white),
+                              onPressed: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(builder: (context) => SecondScreen())
+                                ).then((_) {
+                                  setState(() {
+                                    _hasNewNotifications = false;
+                                  });
+                                });
+                              },
+                            ),
+                            if (_hasNewNotifications)
+                              Positioned(
+                                right: 11,
+                                top: 11,
+                                child: Container(
+                                  padding: EdgeInsets.all(2),
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFD4B150),
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                  constraints: const BoxConstraints(
+                                    minWidth: 12,
+                                    minHeight: 12,
+                                  ),
+                                ),
+                              ),
+                          ],
                         ),
                       ),
                     ],
@@ -80,11 +113,11 @@ class NotificationsPage extends StatelessWidget {
                 child: const Column(
                   children: [
                     TabBar(
-                      indicator: UnderlineTabIndicator( // Changed indicator to UnderlineTabIndicator
+                      indicator: UnderlineTabIndicator(
                         borderSide: BorderSide(color: Color(0xFFD4B150), width: 4.0),
                       ),
                       unselectedLabelColor: Colors.grey,
-                      labelColor: Color(0xFFD4B150), // Set label color to match the indicator color
+                      labelColor: Color(0xFFD4B150),
                       labelStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                       tabs: [
                         Tab(text: 'Received'),
@@ -117,52 +150,7 @@ class NotificationsList extends StatelessWidget {
   final String type;
 
   const NotificationsList({Key? key, required this.type}) : super(key: key);
-
-  final List<Map<String, String>> transactions = const [
-    {
-      'date': 'May 28, 2024',
-      'transactionId': '1234567890',
-      'time': '08:00 am',
-      'amount': '\$2,500.00',
-      'status': 'Successful'
-    },
-    {
-      'date': 'May 24, 2024',
-      'transactionId': '1234567890',
-      'time': '08:00 am',
-      'amount': '\$2,500.00',
-      'status': 'Successful'
-    },
-    {
-      'date': 'May 24, 2024',
-      'transactionId': '1234567890',
-      'time': '08:00 am',
-      'amount': '\$2,500.00',
-      'status': 'Successful'
-    },
-    {
-      'date': 'May 26, 2024',
-      'transactionId': '1234567890',
-      'time': '08:00 am',
-      'amount': '\$2,500.00',
-      'status': 'Successful'
-    },
-    {
-      'date': 'May 27, 2024',
-      'transactionId': '1234567890',
-      'time': '08:00 am',
-      'amount': '\$2,500.00',
-      'status': 'Successful'
-    },
-    {
-      'date': 'May 29, 2024',
-      'transactionId': '1234567890',
-      'time': '08:00 am',
-      'amount': '\$2,500.00',
-      'status': 'Successful'
-    },
-    // Add more transactions if needed
-  ];
+  
 
   @override
   Widget build(BuildContext context) {
@@ -226,3 +214,62 @@ class NotificationsList extends StatelessWidget {
     );
   }
 }
+
+class SecondScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Second Screen'),
+      ),
+      body: Center(
+        child: Text('This is the second screen.'),
+      ),
+    );
+  }
+}
+const List<Map<String, String>> transactions = [
+  {
+    'date': 'May 28, 2024',
+    'transactionId': '1234567890',
+    'time': '08:00 am',
+    'amount': '\$2,500.00',
+    'status': 'Successful'
+  },
+  {
+    'date': 'May 24, 2024',
+    'transactionId': '1234567890',
+    'time': '08:00 am',
+    'amount': '\$2,500.00',
+    'status': 'Successful'
+  },
+  {
+    'date': 'May 24, 2024',
+    'transactionId': '1234567890',
+    'time': '08:00 am',
+    'amount': '\$2,500.00',
+    'status': 'Successful'
+  },
+  {
+    'date': 'May 26, 2024',
+    'transactionId': '1234567890',
+    'time': '08:00 am',
+    'amount': '\$2,500.00',
+    'status': 'Successful'
+  },
+  {
+    'date': 'May 27, 2024',
+    'transactionId': '1234567890',
+    'time': '08:00 am',
+    'amount': '\$2,500.00',
+    'status': 'Successful'
+  },
+  {
+    'date': 'May 29, 2024',
+    'transactionId': '1234567890',
+    'time': '08:00 am',
+    'amount': '\$2,500.00',
+    'status': 'Successful'
+  },
+  // Add more transactions if needed
+];

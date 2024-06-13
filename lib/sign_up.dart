@@ -29,7 +29,7 @@ class _SignupPageState extends State<SignupPage> {
   Future<void> _register() async {
     if (_formKey.currentState!.validate()) {
       final response = await http.post(
-        Uri.parse('https://f50b-41-70-47-51.ngrok-free.app/register'),
+        Uri.parse('https://qr-based-mobile-wallet.onrender.com/register'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
           'email': _emailController.text,
@@ -49,7 +49,7 @@ class _SignupPageState extends State<SignupPage> {
 
       if (response.statusCode == 201) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text('User registered successfully', textAlign: TextAlign.center,
               style: TextStyle(color: Colors.white),),
             backgroundColor: Colors.green,
@@ -113,8 +113,8 @@ class _SignupPageState extends State<SignupPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [ // Adjust height for spacing
-                    Center(
-                      child: const Text(
+                    const Center(
+                      child: Text(
                         'Create Account',
                         style: TextStyle(
                           fontSize: 18,
@@ -131,7 +131,7 @@ class _SignupPageState extends State<SignupPage> {
                         labelText: 'Email',
                         hintText: "Enter email",
                         floatingLabelBehavior: FloatingLabelBehavior.always,
-                        suffixIcon: Icon(
+                        suffixIcon: const Icon(
                           Icons.email,
                           color: Color(0xFF564FA1),
                         ),
@@ -156,7 +156,7 @@ class _SignupPageState extends State<SignupPage> {
                         labelText: 'Username',
                         hintText: "Enter username",
                         floatingLabelBehavior: FloatingLabelBehavior.always,
-                        suffixIcon: Icon(
+                        suffixIcon: const Icon(
                           Icons.person,
                           color: Color(0xFF564FA1),
                         ),
@@ -181,7 +181,7 @@ class _SignupPageState extends State<SignupPage> {
                         labelText: 'Password',
                         hintText: "Enter password",
                         floatingLabelBehavior: FloatingLabelBehavior.always,
-                        suffixIcon: Icon(
+                        suffixIcon: const Icon(
                           Icons.lock,
                           color: Color(0xFF564FA1),
                         ),
@@ -207,7 +207,7 @@ class _SignupPageState extends State<SignupPage> {
                         labelText: 'Confirm Password',
                         hintText: "Re-Enter Password",
                         floatingLabelBehavior: FloatingLabelBehavior.always,
-                        suffixIcon: Icon(
+                        suffixIcon: const Icon(
                           Icons.lock,
                           color: Color(0xFF564FA1),
                         ),
@@ -236,7 +236,7 @@ class _SignupPageState extends State<SignupPage> {
                         labelText: 'Client ID',
                         hintText: "Enter client ID",
                         floatingLabelBehavior: FloatingLabelBehavior.always,
-                        suffixIcon: Icon(
+                        suffixIcon: const Icon(
                           Icons.vpn_key,
                           color: Color(0xFF564FA1),
                         ),
@@ -261,7 +261,7 @@ class _SignupPageState extends State<SignupPage> {
                         labelText: 'Secret Key',
                         hintText: "Enter secret key",
                         floatingLabelBehavior: FloatingLabelBehavior.always,
-                        suffixIcon: Icon(
+                        suffixIcon: const Icon(
                           Icons.vpn_key,
                           color: Color(0xFF564FA1),
                         ),
@@ -286,7 +286,7 @@ class _SignupPageState extends State<SignupPage> {
                         labelText: 'Card Name',
                         hintText: "Enter card name",
                         floatingLabelBehavior: FloatingLabelBehavior.always,
-                        suffixIcon: Icon(
+                        suffixIcon: const Icon(
                           Icons.credit_card,
                           color: Color(0xFF564FA1),
                         ),
@@ -311,7 +311,7 @@ class _SignupPageState extends State<SignupPage> {
                         labelText: 'Card Number',
                         hintText: "Enter card number",
                         floatingLabelBehavior: FloatingLabelBehavior.always,
-                        suffixIcon: Icon(
+                        suffixIcon: const Icon(
                           Icons.credit_card,
                           color: Color(0xFF564FA1),
                         ),
@@ -336,7 +336,7 @@ class _SignupPageState extends State<SignupPage> {
                         labelText: 'Card Security Code',
                         hintText: "Enter security code",
                         floatingLabelBehavior: FloatingLabelBehavior.always,
-                        suffixIcon: Icon(
+                        suffixIcon: const Icon(
                           Icons.credit_card,
                           color: Color(0xFF564FA1),
                         ),
@@ -361,7 +361,7 @@ class _SignupPageState extends State<SignupPage> {
                         labelText: 'Card Expiry',
                         hintText: "Enter card expiry",
                         floatingLabelBehavior: FloatingLabelBehavior.always,
-                        suffixIcon: Icon(
+                        suffixIcon: const Icon(
                           Icons.credit_card,
                           color: Color(0xFF564FA1),
                         ),
@@ -382,10 +382,10 @@ class _SignupPageState extends State<SignupPage> {
                     const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: _register,
-                      child: const Text('Create'),
+                      child: Text('Create'),
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFF564FA1),
-                          textStyle: TextStyle(fontSize: 16)
+                          backgroundColor: const Color(0xFF564FA1),
+                          textStyle: const TextStyle(fontSize: 16)
                       ),
                     ),
                     const SizedBox(height: 10),
@@ -395,7 +395,7 @@ class _SignupPageState extends State<SignupPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => LoginPage(),
+                            builder: (context) => const LoginPage(),
                           ),
                         );
                       },

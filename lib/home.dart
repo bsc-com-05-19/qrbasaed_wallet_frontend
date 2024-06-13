@@ -129,7 +129,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             flex: 0,
             child: SingleChildScrollView(
               child: Container(
-                height: MediaQuery.of(context).size.height / 2.3,
+                height: MediaQuery.of(context).size.height / 2.1,
                 decoration: const BoxDecoration(
                   color: Color(0xFF564FA1),
                 ),
@@ -155,12 +155,12 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                               ),
                               const SizedBox(width: 8),
                               const Text(
-                                'IZEpay',
+                                'izePay',
                                 style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 30,
+                                  color: Color(0xFFD4B150),
+                                  fontSize: 16,
                                   fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w600,
+                                  fontWeight: FontWeight.w700,
                                 ),
                               ),
                             ],
@@ -184,33 +184,13 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                           ),
                         ],
                       ),
-                      const SizedBox(height: 26),
-                      const Text(
-                        'Welcome',
-                        style: TextStyle(
-                          color: Color(0xFFD4B150),
-                          fontSize: 38,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      Text(
-                        _username,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(height: 35),
-                      Row(
+                      const SizedBox( height: 26),
+                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Icon(
                             Icons.calendar_today,
-                            color: Color(0xFFD4B150),
+                            color: Colors.white,
                             size: 16,
                           ),
                           const SizedBox(width: 8),
@@ -225,13 +205,33 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                           ),
                         ],
                       ),
+                      const SizedBox(height: 16,),
+                      const Text(
+                        'Welcome!',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 48,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      Text(
+                        _username,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                       const SizedBox(height: 16),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Icon(
                             Icons.account_balance_wallet,
-                            color: Color(0xFFD4B150),
+                            color: Colors.grey,
                           ),
                           const SizedBox(width: 8),
                           Container(
@@ -364,10 +364,10 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           color: Colors.white,
           boxShadow: [
             BoxShadow(
-              color: Color(0xFF564FA1).withOpacity(0.5),
+              color: const Color(0xFF564FA1).withOpacity(0.5),
               spreadRadius: 5,
               blurRadius: 7,
-              offset: Offset(0, 3), // changes position of shadow
+              offset: const Offset(0, 3), // changes position of shadow
             ),
           ],
         ),
@@ -391,61 +391,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     );
   }
 
-  Widget _buildRecipientCircle(String initial, String name) {
-    return GestureDetector(
-      onTap: () {
-        // Add navigation logic for each recipient here
-      },
-      child: Column(
-        children: [
-          CircleAvatar(
-            radius: 20,
-            backgroundColor: const Color(0xFFD4B150),
-            child: Text(
-              initial,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            name,
-            style: const TextStyle(
-              color: Color(0xFF564FA1),
-              fontSize: 12,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildRecipientCircleImage(String imagePath, String name) {
-    return GestureDetector(
-      onTap: () {
-        // Add navigation logic for each recipient here
-      },
-      child: Column(
-        children: [
-          CircleAvatar(
-            radius: 20,
-            backgroundImage: AssetImage(imagePath),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            name,
-            style: const TextStyle(
-              color: Color(0xFF564FA1),
-              fontSize: 12,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
   Widget _buildNavButton(IconData icon, String label, {required int index}) {
     return GestureDetector(
