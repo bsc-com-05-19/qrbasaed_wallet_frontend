@@ -76,7 +76,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       // If user is already logged in, re-authenticate them in the background
       try {
         var response = await http.post(
-          Uri.parse('https://5930-41-70-47-51.ngrok-free.app/login'),
+          Uri.parse('https://f50b-41-70-47-51.ngrok-free.app/login'),
           body: {'username': username, 'password': password},
         );
 
@@ -330,7 +330,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       margin: EdgeInsets.symmetric(horizontal: 5.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20), // Add border radius
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                             color: Colors.black26,
                             blurRadius: 5,

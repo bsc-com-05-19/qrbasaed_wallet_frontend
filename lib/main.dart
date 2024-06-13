@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: Scaffold(
+      home: const Scaffold(
         body: Center(
           child:
           //HomePage()

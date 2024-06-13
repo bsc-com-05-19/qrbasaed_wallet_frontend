@@ -61,7 +61,7 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> {
                 padding: EdgeInsets.all(4),
                 child: Text(
                   'Payee: $scannedData',
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                   ),
                   textAlign: TextAlign.center,
@@ -70,7 +70,7 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> {
               SizedBox(height: 16),
               TextFormField(
                 controller: currencyController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Currency',
                   labelStyle: TextStyle(color: Colors.white),
                   focusedBorder: UnderlineInputBorder(
@@ -85,7 +85,7 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> {
               SizedBox(height: 8),
               TextFormField(
                 controller: amountController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Amount',
                   labelStyle: TextStyle(color: Colors.white),
                   focusedBorder: UnderlineInputBorder(
@@ -264,7 +264,7 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> {
       };
 
       final response = await http.post(
-        Uri.parse('https://5930-41-70-47-51.ngrok-free.app/create-order'),
+        Uri.parse('https://f50b-41-70-47-51.ngrok-free.app/create-order'),
         headers: <String, String>{
           'Content-Type': 'application/json',
         },

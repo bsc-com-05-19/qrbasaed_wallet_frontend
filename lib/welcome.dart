@@ -20,7 +20,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
     // Set status bar color to match the background color
     SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(statusBarColor: Colors.white),
+      const SystemUiOverlayStyle(statusBarColor: Colors.white),
     );
 
     // Navigate to the sign-in screen after a delay
@@ -37,7 +37,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
     // Reset the status bar color when the splash screen page is disposed
     SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(statusBarColor: Color(0xFF564FA1)),
+      const SystemUiOverlayStyle(statusBarColor: Color(0xFF564FA1)),
     );
   }
 
