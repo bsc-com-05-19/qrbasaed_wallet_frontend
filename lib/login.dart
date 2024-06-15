@@ -22,10 +22,15 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   String _username = '';
   String _password = '';
+  bool _isLoading = false;
 
   Future<void> _loginUser() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
+
+      setState(() {
+        _isLoading = true;
+      });
 
       var url = Uri.parse('https://qr-based-mobile-wallet.onrender.com/login');
       try {
@@ -66,11 +71,18 @@ class _LoginPageState extends State<LoginPage> {
         print('Error during login: $e');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('An error occurred during login. Please try again.', textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.white),),
-            backgroundColor: Colors.red,
+            content: Text(
+              'An error occurred during login. Please try again.',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.white),
             ),
+            backgroundColor: Colors.red,
+          ),
         );
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
       }
     }
   }
@@ -78,135 +90,148 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              height: 250,
-              decoration: const BoxDecoration(
-                color: Color(0xFF564FA1), // Replace deepPurple with the hex color
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(20),
-                  bottomRight: Radius.circular(20),
-                ),
-              ),
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25),
-                        color: Colors.white,
-                      ),
-                      padding: EdgeInsets.all(8),
-                      child: Image.asset(
-                        'assets/izelogo.png', // Replace with your logo asset path
-                        height: 50, // Adjust the height of the logo
-                      ),
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                Container(
+                  height: 250,
+                  decoration: const BoxDecoration(
+                    color: Color(0xFF564FA1), // Replace deepPurple with the hex color
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20),
                     ),
-                    const SizedBox(height: 10),
-                    const Text(
-                      'Welcome To IZEpay',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const SizedBox(height: 20),
-                    Divider(),// Adjust height for spacing
-                    Center(
-                      child: const Text(
-                        'Sign in to get started',
-                        style: TextStyle(
-                          color: Colors.black54,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 20), // Adjust height for spacing
-                    TextFormField(
-                      key: const Key("username_field"),
-                      decoration: InputDecoration(
-                        labelText: 'Username',
-                        hintText: "Enter your username",
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        suffixIcon: Icon(
-                          Icons.account_circle,
-                          color: Color(0xFF564FA1), // Replace deepPurple with the hex color
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter your username';
-                        }
-                        return null;
-                      },
-                      onSaved: (value) => _username = value!,
-                    ),
-                    const SizedBox(height: 20.0),
-                    TextFormField(
-                      key: const Key("password_field"),
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        labelText: 'Password',
-                        hintText: "Enter your password",
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        suffixIcon: Icon(
-                          Icons.lock,
-                          color: Color(0xFF564FA1), // Replace deepPurple with the hex color
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter your password';
-                        }
-                        return null;
-                      },
-                      onSaved: (value) => _password = value!,
-                    ),
-                    const SizedBox(height: 20.0),
-                    ElevatedButton(
-                      key: const Key("login_button"),
-                      onPressed: _loginUser,
-                      child: const Text('Sign in'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF564FA1),
-                        textStyle: TextStyle(fontSize: 16)
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    TextButton(
-                      onPressed: () {
-                        // Add navigation to sign in page here
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SignupPage(),
+                  ),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: Colors.white,
                           ),
-                        );
-                      },
-                      child: const NoAccountText(),
+                          padding: EdgeInsets.all(8),
+                          child: Image.asset(
+                            'assets/izelogo.png', // Replace with your logo asset path
+                            height: 50, // Adjust the height of the logo
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        const Text(
+                          'Welcome To IZEpay',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ],
                     ),
-                    Divider(),
-                  ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const SizedBox(height: 20),
+                        Divider(),// Adjust height for spacing
+                        Center(
+                          child: const Text(
+                            'Sign in to get started',
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20), // Adjust height for spacing
+                        TextFormField(
+                          key: const Key("username_field"),
+                          decoration: InputDecoration(
+                            labelText: 'Username',
+                            hintText: "Enter your username",
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            suffixIcon: Icon(
+                              Icons.account_circle,
+                              color: Color(0xFF564FA1), // Replace deepPurple with the hex color
+                            ),
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter your username';
+                            }
+                            return null;
+                          },
+                          onSaved: (value) => _username = value!,
+                        ),
+                        const SizedBox(height: 20.0),
+                        TextFormField(
+                          key: const Key("password_field"),
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            labelText: 'Password',
+                            hintText: "Enter your password",
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            suffixIcon: Icon(
+                              Icons.lock,
+                              color: Color(0xFF564FA1), // Replace deepPurple with the hex color
+                            ),
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter your password';
+                            }
+                            return null;
+                          },
+                          onSaved: (value) => _password = value!,
+                        ),
+                        const SizedBox(height: 20.0),
+                        ElevatedButton(
+                          key: const Key("login_button"),
+                          onPressed: _loginUser,
+                          child: const Text('Sign in'),
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xFF564FA1),
+                              textStyle: TextStyle(fontSize: 16)
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        TextButton(
+                          onPressed: () {
+                            // Add navigation to sign in page here
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SignupPage(),
+                              ),
+                            );
+                          },
+                          child: const NoAccountText(),
+                        ),
+                        Divider(),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          if (_isLoading)
+            Container(
+              color: Colors.black.withOpacity(0.5),
+              child: const Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFD4B150)),
                 ),
               ),
             ),
-          ],
-        ),
+        ],
       ),
     );
   }

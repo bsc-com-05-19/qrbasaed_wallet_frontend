@@ -91,12 +91,6 @@ class _QRImageState extends State<QRImage> {
         ),
         backgroundColor: const Color(0xFF564FA1),
         iconTheme: const IconThemeData(color: Colors.white),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.save_alt),
-            onPressed: _saveQRImage,
-          ),
-        ],
       ),
       body: Center(
         child: Column(
