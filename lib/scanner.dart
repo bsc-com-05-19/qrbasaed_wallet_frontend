@@ -18,9 +18,9 @@ class QRCodeScannerPage extends StatefulWidget {
 
 class _QRCodeScannerPageState extends State<QRCodeScannerPage> {
   MobileScannerController? scannerController;
-  TextEditingController currencyController = TextEditingController();
   TextEditingController amountController = TextEditingController();
   String scannedData = '';
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -32,7 +32,6 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> {
   void dispose() {
     // Dispose of the scanner controller
     scannerController?.dispose();
-    currencyController.dispose(); // Dispose of controllers
     amountController.dispose();
     super.dispose();
   }
@@ -61,31 +60,16 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> {
                 padding: EdgeInsets.all(4),
                 child: Text(
                   'Payee: $scannedData',
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.white,
                   ),
                   textAlign: TextAlign.center,
                 ),
               ),
-              SizedBox(height: 16),
-              TextFormField(
-                controller: currencyController,
-                decoration: const InputDecoration(
-                  labelText: 'Currency',
-                  labelStyle: TextStyle(color: Colors.white),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white), // Set border color to white
-                  ),
-                ),
-                style: TextStyle(color: Colors.white),
-              ),
               SizedBox(height: 8),
               TextFormField(
                 controller: amountController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Amount',
                   labelStyle: TextStyle(color: Colors.white),
                   focusedBorder: UnderlineInputBorder(
@@ -159,12 +143,6 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> {
                 ),
               ),
               Text(
-                'Currency: ${currencyController.text}',
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-              Text(
                 'Convenience Fee: USD 2',
                 style: TextStyle(
                   color: Colors.white,
@@ -190,6 +168,7 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> {
                       foregroundColor: Color(0xFF564FA1),
                     ),
                     onPressed: () {
+                      Navigator.of(context).pop();
                       _createOrder(scannedData);
                     },
                     child: const Text('Pay'),
@@ -217,6 +196,10 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> {
   }
 
   Future<void> _createOrder(String scannedData) async {
+    setState(() {
+      _isLoading = true;
+    });
+
     try {
       // Retrieve stored session data including card details
       final prefs = await SharedPreferences.getInstance();
@@ -250,7 +233,7 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> {
         'purchase_units': [
           {
             'amount': {
-              'currency_code': currencyController.text, // Get currency from text field
+              'currency_code': "USD", // Get currency from text field
               'value': amountController.text, // Get amount from text field
             },
             'payee': {
@@ -264,7 +247,6 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> {
       };
 
       final response = await http.post(
-
         Uri.parse('https://qr-based-mobile-wallet.onrender.com/create-order'),
         headers: <String, String>{
           'Content-Type': 'application/json',
@@ -320,6 +302,10 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> {
           );
         },
       );
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -351,21 +337,6 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> {
               });
             },
           ),
-          IconButton(
-            icon: Icon(Icons.account_circle),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return ProfilePage();
-                  },
-                ),
-              ).then((value) {
-                scannerController = MobileScannerController();
-              });
-            },
-          ),
         ],
       ),
       body: Stack(
@@ -386,6 +357,15 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> {
             borderRadius: 16,
             borderColor: Color(0xFF564FA1),
           ),
+          if (_isLoading)
+            Container(
+              color: Color(0xFF564FA1).withOpacity(0.9),
+              child: const Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFD4B150)),
+                ),
+              ),
+            ),
         ],
       ),
     );
