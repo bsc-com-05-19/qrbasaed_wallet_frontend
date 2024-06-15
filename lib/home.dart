@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:qrbased_frontend/qr_image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'login.dart';
@@ -76,7 +77,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       // If user is already logged in, re-authenticate them in the background
       try {
         var response = await http.post(
-          Uri.parse('https://f50b-41-70-47-51.ngrok-free.app/login'),
+          Uri.parse('https://5930-41-70-47-51.ngrok-free.app/login'),
           body: {'username': username, 'password': password},
         );
 
@@ -129,7 +130,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             flex: 0,
             child: SingleChildScrollView(
               child: Container(
-                height: MediaQuery.of(context).size.height / 2.1,
+                height: MediaQuery.of(context).size.height / 2.3,
                 decoration: const BoxDecoration(
                   color: Color(0xFF564FA1),
                 ),
@@ -155,12 +156,12 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                               ),
                               const SizedBox(width: 8),
                               const Text(
-                                'izePay',
+                                'IZEpay',
                                 style: TextStyle(
-                                  color: Color(0xFFD4B150),
-                                  fontSize: 16,
+                                  color: Colors.white,
+                                  fontSize: 30,
                                   fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w700,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                             ],
@@ -169,48 +170,27 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                             onTap: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => const ProfilePage()),
+                                MaterialPageRoute(builder: (context) => const LoginPage()),
                               );
                             },
                             child: const CircleAvatar(
                               radius: 20,
                               backgroundColor: Color(0xFFD4B150),
                               child: Icon(
-                                Icons.person,
+                                Icons.logout_sharp,
                                 size: 20,
-                                color: Colors.white,
+                                color: Color(0xFF564FA1),
                               ),
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox( height: 26),
-                       Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(
-                            Icons.calendar_today,
-                            color: Colors.white,
-                            size: 16,
-                          ),
-                          const SizedBox(width: 8),
-                          Text(
-                            currentDate,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 13,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 16,),
+                      const SizedBox(height: 26),
                       const Text(
-                        'Welcome!',
+                        'Welcome',
                         style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 48,
+                          color: Color(0xFFD4B150),
+                          fontSize: 38,
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w700,
                         ),
@@ -225,13 +205,34 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                           fontWeight: FontWeight.w600,
                         ),
                       ),
+                      const SizedBox(height: 35),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(
+                            Icons.calendar_today,
+                            color: Color(0xFFD4B150),
+                            size: 16,
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            currentDate,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 13,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
+                      ),
                       const SizedBox(height: 16),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Icon(
                             Icons.account_balance_wallet,
-                            color: Colors.grey,
+                            color: Color(0xFFD4B150),
                           ),
                           const SizedBox(width: 8),
                           Container(
@@ -330,7 +331,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       margin: EdgeInsets.symmetric(horizontal: 5.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20), // Add border radius
-                        boxShadow: const [
+                        boxShadow: [
                           BoxShadow(
                             color: Colors.black26,
                             blurRadius: 5,
@@ -352,8 +353,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: 
-      FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) => const QRCodeScannerPage()));
         },
@@ -365,10 +365,10 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           color: Colors.white,
           boxShadow: [
             BoxShadow(
-              color: const Color(0xFF564FA1).withOpacity(0.5),
+              color: Color(0xFF564FA1).withOpacity(0.5),
               spreadRadius: 5,
               blurRadius: 7,
-              offset: const Offset(0, 3), // changes position of shadow
+              offset: Offset(0, 3), // changes position of shadow
             ),
           ],
         ),
@@ -382,8 +382,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               children: [
                 _buildNavButton(Icons.home_filled, 'Home', index: 0),
                 _buildNavButton(Icons.notifications, 'Notifications', index: 1),
-                _buildNavButton(Icons.receipt_long, 'Receipts', index: 2),
-                _buildNavButton(Icons.settings, 'Settings', index: 3),
+                _buildNavButton(Icons.account_box_outlined, 'Account', index: 2),
+                _buildNavButton(Icons.qr_code_outlined, 'My QR', index: 3),
               ],
             ),
           ),
@@ -392,6 +392,61 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     );
   }
 
+  Widget _buildRecipientCircle(String initial, String name) {
+    return GestureDetector(
+      onTap: () {
+        // Add navigation logic for each recipient here
+      },
+      child: Column(
+        children: [
+          CircleAvatar(
+            radius: 20,
+            backgroundColor: const Color(0xFFD4B150),
+            child: Text(
+              initial,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            name,
+            style: const TextStyle(
+              color: Color(0xFF564FA1),
+              fontSize: 12,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRecipientCircleImage(String imagePath, String name) {
+    return GestureDetector(
+      onTap: () {
+        // Add navigation logic for each recipient here
+      },
+      child: Column(
+        children: [
+          CircleAvatar(
+            radius: 20,
+            backgroundImage: AssetImage(imagePath),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            name,
+            style: const TextStyle(
+              color: Color(0xFF564FA1),
+              fontSize: 12,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   Widget _buildNavButton(IconData icon, String label, {required int index}) {
     return GestureDetector(
@@ -407,10 +462,10 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             Navigator.push(context, MaterialPageRoute(builder: (context) => const NotificationsPage()));
             break;
           case 2:
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const ReceiptPage()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfilePage()));
             break;
           case 3:
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsPage()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const QRImage()));
             break;
         }
       },
